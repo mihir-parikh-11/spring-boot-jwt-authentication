@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+          http://www.liquibase.org/xml/ns/dbchangelog
+          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <!-- Load roles -->
+    <changeSet id="20250821151755-data" author="mihir">
+        <loadData file="db/changelog/data/roles.csv" tableName="authority_role" separator=","/>
+    </changeSet>
+
+    <!-- Load users -->
+    <changeSet id="20250821151800-1-data" author="mihir">
+        <loadData file="db/changelog/data/users.csv" tableName="user" separator=","/>
+    </changeSet>
+
+    <!-- Load user roles -->
+    <changeSet id="20250821151800-2-data" author="mihir">
+        <loadData file="db/changelog/data/user_roles.csv" tableName="user_role" separator=","/>
+    </changeSet>
+</databaseChangeLog>

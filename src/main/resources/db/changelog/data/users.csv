@@ -1,0 +1,2 @@
+id,username,email,first_name,last_name,password,phone_number,status
+1,admin@gmail.com,admin@gmail.com,Admin,User,$2a$10$rs2z73ZvSRshiZ4KHvxp1eWer77spjnZr52lH0Qy84Mlrtb7Za8lu,1234567890,true
