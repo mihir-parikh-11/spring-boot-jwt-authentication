@@ -12,6 +12,7 @@ import com.auth.app.service.dto.LoginDTO;
 import com.auth.app.service.dto.RefreshTokenDTO;
 import com.auth.app.service.dto.RegisterUserDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
 
     private final UserService userService;
@@ -36,6 +38,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponseDTO> registerUser(@RequestBody RegisterUserDTO registerUserDTO) {
+        log.info("REST request for register user : {} ", registerUserDTO);
         User user = userService.registerUser(registerUserDTO);
         return ResponseEntity.ok(AuthResponseDTO.builder()
                 .accessToken(jwtService.generateAccessToken(user))
@@ -45,6 +48,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> loginUser(@RequestBody LoginDTO loginDTO) {
+        log.info("REST request for login : {} ", loginDTO);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
         Authentication authenticate = authenticationProvider.authenticate(authenticationToken);
         if (authenticate.isAuthenticated()) {
@@ -60,6 +64,7 @@ public class AuthController {
 
     @PostMapping("/refresh")
     public ResponseEntity<AuthResponseDTO> refreshToken(@RequestBody RefreshTokenDTO refreshTokenDTO) {
+        log.info("REST request for refresh token : {}", refreshTokenDTO);
         String username = jwtService.extractUsername(refreshTokenDTO.getRefreshToken());
         User user = userService.findByUsername(username);
         if (jwtService.validateToken(refreshTokenDTO.getRefreshToken(), new CustomUserDetails(user))) {
