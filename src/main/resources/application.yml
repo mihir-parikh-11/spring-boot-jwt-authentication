@@ -23,3 +23,10 @@ app:
 
 server:
   port: 8080
+
+logging:
+  level:
+    root: INFO
+    com.example: DEBUG
+  file:
+    name: app.log
